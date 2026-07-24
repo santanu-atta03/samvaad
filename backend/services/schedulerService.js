@@ -127,7 +127,7 @@ const checkTaskReminders = async (io) => {
       });
 
       if (io) {
-        io.to(`user_${task.user._id}`).emit('task-reminder', {
+        io.to(task.user._id.toString()).emit('task-reminder', {
           message: `Your task "${task.title}" is due in less than 30 minutes!`,
           taskId: task._id,
         });

@@ -37,9 +37,11 @@ export const CustomToastProvider = ({ children }) => {
   };
 
   return (
-    <ToastProvider>
-      {children}
-      <ToastViewport />
-    </ToastProvider>
+    <ToastContext.Provider value={{ showToast }}>
+      <ToastProvider>
+        {children}
+        <ToastViewport />
+      </ToastProvider>
+    </ToastContext.Provider>
   );
 };
