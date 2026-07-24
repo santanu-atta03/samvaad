@@ -218,6 +218,7 @@ const Chat = ({ token }) => {
   const [replyToMessage, setReplyToMessage]         = useState(null);
   const [uploadPreview, setUploadPreview]           = useState(null);
   const [showTaskPanel, setShowTaskPanel]           = useState(false);
+  const [showRightSidebar, setShowRightSidebar]     = useState(false);
   const [showProfile, setShowProfile]               = useState(false);
   const [showBgPicker, setShowBgPicker]             = useState(false);
   const [showMoreMenu, setShowMoreMenu]             = useState(false);
@@ -374,7 +375,8 @@ const Chat = ({ token }) => {
     messagesWithDates, messageContainerRef, messagesEndRef, currentBgCls: "chatbg-default",
     setForwardMessageData, setShowForwardModal, handleScroll: () => {},
     handleNewChat: createNewConversation, handleTyping, handleStopTyping,
-    showTaskPanel, setShowTaskPanel, tasks
+    showTaskPanel, setShowTaskPanel, tasks,
+    showRightSidebar, setShowRightSidebar
   };
 
   return (
@@ -397,9 +399,9 @@ const Chat = ({ token }) => {
           <ChatWindow {...commonProps} />
         </div>
 
-        {/* 3. Right Info Panel — 300px, animates in when conv selected */}
+        {/* 3. Right Info Panel — 300px, animates in when conv selected and toggled */}
         <AnimatePresence>
-          {selectedConversation && (
+          {selectedConversation && showRightSidebar && (
             <motion.div
               key="right-panel"
               initial={{ width: 0, opacity: 0 }}

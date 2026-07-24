@@ -648,7 +648,9 @@ export const ChatProvider = ({ children, token, userId }) => {
       let finalContent = content;
       let isEncrypted = false;
 
-      // Encrypt if it's a 1-on-1 chat
+      // Encryption disabled as requested: messages are sent in plain text.
+      // Encrypt if it's a 1-on-1 chat (disabled)
+      /*
       if (selectedConversation.type === 'one-on-one' && type === 'text') {
         const otherParticipant = selectedConversation.participants?.find(p => p._id !== userId);
         if (otherParticipant?.settings?.publicKey) {
@@ -667,6 +669,7 @@ export const ChatProvider = ({ children, token, userId }) => {
           }
         }
       }
+      */
 
       const response = await api.sendMessage(
         {

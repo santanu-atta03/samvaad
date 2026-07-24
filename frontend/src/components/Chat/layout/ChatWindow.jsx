@@ -80,7 +80,7 @@
 // frontend/src/components/Chat/layout/ChatWindow.jsx
 
 import React, { useRef, useEffect } from "react";
-import { SmilePlus, Paperclip, Camera, SendHorizonal } from "lucide-react";
+import { SmilePlus, Paperclip, Camera, SendHorizonal, Info } from "lucide-react";
 
 const ChatWindow = ({
   selectedConversation,
@@ -91,6 +91,8 @@ const ChatWindow = ({
   replyToMessage,
   setReplyToMessage,
   isTyping,
+  showRightSidebar,
+  setShowRightSidebar,
 }) => {
   const messageInput = useRef(null);
   const messageEndRef = useRef(null);
@@ -115,19 +117,29 @@ const ChatWindow = ({
           <span className="font-extrabold text-[22px] tracking-[0.2em] text-white">HYPER</span>
         </div>
         {/* Group avatars in a cluster, right side */}
-        <div className="flex items-center">
-          <div className="flex -space-x-3 mr-2">
-            {selectedConversation?.participants?.slice(0, 4).map((p, i) => (
-              <img
-                key={p._id || i}
-                src={p.avatar || "/default-avatar.png"}
-                className="w-9 h-9 rounded-full object-cover border-2 border-[#17192b]"
-                alt={p.name}
-              />
-            ))}
+        <div className="flex items-center gap-3">
+          <div className="flex items-center">
+            <div className="flex -space-x-3 mr-2">
+              {selectedConversation?.participants?.slice(0, 4).map((p, i) => (
+                <img
+                  key={p._id || i}
+                  src={p.avatar || "/default-avatar.png"}
+                  className="w-9 h-9 rounded-full object-cover border-2 border-[#17192b]"
+                  alt={p.name}
+                />
+              ))}
+            </div>
+            <button className="w-9 h-9 rounded-full bg-[#a855f7] flex items-center justify-center text-white text-lg font-bold border-2 border-[#17192b] shadow-sm hover:opacity-90">
+              +
+            </button>
           </div>
-          <button className="w-9 h-9 rounded-full bg-[#a855f7] flex items-center justify-center text-white text-lg font-bold border-2 border-[#17192b] shadow-sm hover:opacity-90">
-            +
+          <button
+            type="button"
+            onClick={() => setShowRightSidebar(prev => !prev)}
+            className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${showRightSidebar ? 'bg-[#2b64fc] text-white' : 'bg-[#1c1e31] text-[#A3AED0] hover:text-white'}`}
+            title="Toggle Info Sidebar"
+          >
+            <Info size={18} />
           </button>
         </div>
       </div>
