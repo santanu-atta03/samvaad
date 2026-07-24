@@ -68,82 +68,66 @@ const RightSidebarPanel = ({ selectedConversation, getConversationName, getConve
   const displayTasks = tasks.length > 0 ? tasks : DEMO_TASKS;
 
   return (
-    <div className="flex flex-col h-full overflow-hidden" style={{ background: 'hsl(var(--sv-surface))' }}>
+    <div className="flex flex-col h-full overflow-hidden bg-[#191C32]">
       {/* ── Profile Header ── */}
-      <div className="flex flex-col items-center px-4 pt-6 pb-5 flex-shrink-0 border-b" style={{ borderColor: 'hsl(var(--sv-border))' }}>
+      <div className="flex flex-col items-center px-4 pt-8 pb-6 flex-shrink-0 relative">
+        {/* Toggle Switch */}
+        <div className="absolute top-6 right-6">
+          <div className="w-12 h-6 bg-[#17192b] rounded-full flex items-center p-1 cursor-pointer">
+            <div className="w-4 h-4 rounded-full bg-[#fca12b] shadow-sm transform translate-x-6 flex items-center justify-center">
+              {/* Moon shape approximation using CSS or just leaving it solid */}
+            </div>
+          </div>
+        </div>
+
         {/* Avatar */}
-        <div className="relative mb-3">
-          <div className="w-[60px] h-[60px] rounded-full overflow-hidden"
-            style={{ boxShadow: `0 0 0 3px hsl(var(--sv-accent)/0.35), 0 8px 20px -6px hsl(var(--sv-accent)/0.4)` }}>
+        <div className="relative mb-3 mt-4">
+          <div className="w-[80px] h-[80px] rounded-full overflow-hidden border-2 border-[#191C32] bg-[#17192b]">
             {convAvatar
               ? <img src={convAvatar} alt={convName} className="w-full h-full object-cover" />
-              : <div className="w-full h-full flex items-center justify-center text-2xl font-black text-white"
-                  style={{ background: 'linear-gradient(135deg, hsl(var(--sv-accent)), hsl(var(--sv-accent-2)))' }}>
+              : <div className="w-full h-full flex items-center justify-center text-3xl font-black text-white bg-gradient-to-br from-[#2b64fc] to-[#6087fb]">
                   {convName?.[0]?.toUpperCase()}
                 </div>
             }
           </div>
-          {online && (
-            <div className="absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full bg-emerald-500 border-[2.5px]"
-              style={{ borderColor: 'hsl(var(--sv-surface))' }} />
-          )}
+          <div className="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-400 border-[3px] border-[#191C32]" />
         </div>
 
         {/* Name */}
-        <h3 className="text-sm font-bold leading-tight text-center" style={{ color: 'hsl(var(--sv-text))' }}>
+        <h3 className="text-lg font-bold leading-tight text-center text-white">
           {convName}
         </h3>
 
-        {/* Handle */}
-        <p className="text-[11px] mt-0.5 font-medium" style={{ color: 'hsl(var(--sv-text-3))' }}>
-          @{convName?.toLowerCase().replace(/\s+/g, '')}
+        {/* Handle / Subtitle */}
+        <p className="text-xs mt-1 font-medium text-[#7586a0]">
+          UI/UX Designer
         </p>
-
-        {/* Online badge */}
-        <div className="flex items-center gap-1.5 mt-2.5 rounded-full px-3 py-[3px]"
-          style={{ background: online ? 'rgba(16,185,129,0.12)' : 'hsl(var(--sv-surface-2))' }}>
-          <div className={`w-[6px] h-[6px] rounded-full flex-shrink-0 ${online ? 'bg-emerald-400' : 'bg-gray-500'}`}
-            style={online ? { animation: 'pulse 2s infinite' } : {}} />
-          <span className="text-[10px] font-semibold"
-            style={{ color: online ? '#34d399' : 'hsl(var(--sv-text-3))' }}>
-            {online ? '● Online' : '○ Offline'}
-          </span>
-        </div>
       </div>
 
       {/* ── Scrollable content ── */}
       <div className="flex-1 overflow-y-auto scrollbar-custom">
 
         {/* TO-DO LISTS */}
-        <div className="px-4 pt-4 pb-2">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[10px] font-black uppercase tracking-[0.12em]"
-              style={{ color: 'hsl(var(--sv-text-3))' }}>
+        <div className="px-6 pt-4 pb-2">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-bold text-[#A3AED0]">
               To-Do Lists
             </span>
-            <ChevronDown size={12} style={{ color: 'hsl(var(--sv-text-3))' }} />
           </div>
 
-          <div className="flex flex-col gap-[6px]">
+          <div className="flex flex-col gap-2">
             {displayTasks.slice(0, 5).map((task, i) => {
-              const bgColor = TASK_COLORS[i % TASK_COLORS.length];
-              const emoji   = task.emoji || TASK_EMOJIS[i % TASK_EMOJIS.length];
               return (
                 <div key={task._id || task.id || i}
-                  className="flex items-center gap-2.5 py-[9px] px-3 rounded-xl cursor-pointer transition-all"
-                  style={{ background: 'hsl(var(--sv-surface-2))' }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'hsl(var(--sv-surface-3))'}
-                  onMouseLeave={e => e.currentTarget.style.background = 'hsl(var(--sv-surface-2))'}
+                  className="flex items-center gap-3 py-3 px-4 rounded-xl cursor-pointer transition-all bg-[#17192b] hover:bg-[#232546]"
                 >
-                  {/* Colored emoji pill */}
-                  <div className="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center text-sm"
-                    style={{ background: bgColor + '22', border: `1px solid ${bgColor}33` }}>
-                    <span>{emoji}</span>
-                  </div>
-                  <span className={`text-[12px] font-medium flex-1 truncate leading-tight ${task.status === 'completed' ? 'line-through opacity-40' : ''}`}
-                    style={{ color: 'hsl(var(--sv-text))' }}>
+                  <span className={`text-[13px] font-semibold flex-1 truncate leading-tight text-white ${task.status === 'completed' ? 'line-through opacity-40' : ''}`}>
                     {task.title}
                   </span>
+                  {/* Colored emoji pill */}
+                  <div className="w-6 h-6 rounded-md flex-shrink-0 flex items-center justify-center text-sm">
+                    <span>{task.emoji || TASK_EMOJIS[i % TASK_EMOJIS.length]}</span>
+                  </div>
                 </div>
               );
             })}
@@ -151,37 +135,28 @@ const RightSidebarPanel = ({ selectedConversation, getConversationName, getConve
         </div>
 
         {/* SHARED PHOTOS */}
-        <div className="px-4 pt-4 pb-5">
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="text-[10px] font-black uppercase tracking-[0.12em]"
-              style={{ color: 'hsl(var(--sv-text-3))' }}>
+        <div className="px-6 pt-4 pb-5">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-sm font-bold text-[#A3AED0]">
               Shared Photos
             </span>
-            <ChevronDown size={12} style={{ color: 'hsl(var(--sv-text-3))' }} />
           </div>
 
-          <div className="grid grid-cols-3 gap-[5px]">
+          <div className="grid grid-cols-2 gap-3">
             {sharedPhotos.length > 0
-              ? sharedPhotos.slice(0, 5).map((msg, i) => (
+              ? sharedPhotos.slice(0, 4).map((msg, i) => (
                 <a key={msg._id} href={msg.mediaUrl} target="_blank" rel="noopener noreferrer"
-                  className="aspect-square rounded-xl overflow-hidden hover:scale-105 transition-transform"
-                  style={{ display: 'block' }}>
+                  className="aspect-square rounded-2xl overflow-hidden hover:opacity-90 transition-opacity block bg-[#17192b]">
                   <img src={msg.mediaUrl} alt="" className="w-full h-full object-cover" />
                 </a>
               ))
               : PHOTO_PLACEHOLDERS.map((ph, i) => (
-                <div key={i} className="aspect-square rounded-xl overflow-hidden flex items-center justify-center cursor-pointer hover:scale-105 transition-transform"
+                <div key={i} className="aspect-square rounded-2xl overflow-hidden flex items-center justify-center cursor-pointer hover:opacity-90 transition-opacity"
                   style={{ background: ph.bg }}>
-                  <span className="text-lg opacity-70">{ph.icon}</span>
+                  <span className="text-2xl opacity-70">{ph.icon}</span>
                 </div>
               ))
             }
-            {/* "More" tile */}
-            <div className="aspect-square rounded-xl flex flex-col items-center justify-center gap-1 cursor-pointer hover:opacity-80 transition-opacity"
-              style={{ background: 'hsl(var(--sv-surface-2))' }}>
-              <Grid size={13} style={{ color: 'hsl(var(--sv-text-3))' }} />
-              <span className="text-[9px] font-bold" style={{ color: 'hsl(var(--sv-text-3))' }}>More</span>
-            </div>
           </div>
         </div>
 
@@ -409,36 +384,31 @@ const Chat = ({ token }) => {
         <MobileChatApp {...commonProps} />
       </div>
 
-      {/* ── Desktop: 4-column HYPER layout ── */}
-      <div className="hidden md:flex fixed inset-0" style={{ background: 'hsl(var(--sv-bg))' }}>
+      {/* ── Desktop: 3-column HYPER layout ── */}
+      <div className="hidden md:flex fixed inset-0 bg-[#17192b]">
 
-        {/* 1. Nav Rail — 68px */}
-        <div className="flex-shrink-0 h-full" style={{ width: 68 }}>
-          <NavRail {...commonProps} vibes={vibes} activeVibe={activeVibe} setActiveVibe={setActiveVibe} />
-        </div>
-
-        {/* 2. Chat Sidebar — 272px */}
-        <div className="flex-shrink-0 h-full border-r" style={{ width: 272, borderColor: 'hsl(var(--sv-border))' }}>
+        {/* 1. Chat Sidebar — 300px */}
+        <div className="flex-shrink-0 h-full w-[300px] border-r border-[#232546]">
           <ChatSidebar {...commonProps} />
         </div>
 
-        {/* 3. Center Chat Window — flexible */}
-        <div className="flex-1 h-full min-w-0 border-r" style={{ borderColor: 'hsl(var(--sv-border))' }}>
+        {/* 2. Center Chat Window — flexible */}
+        <div className="flex-1 h-full min-w-0 border-r border-[#232546]">
           <ChatWindow {...commonProps} />
         </div>
 
-        {/* 4. Right Info Panel — 240px, animates in when conv selected */}
+        {/* 3. Right Info Panel — 300px, animates in when conv selected */}
         <AnimatePresence>
           {selectedConversation && (
             <motion.div
               key="right-panel"
               initial={{ width: 0, opacity: 0 }}
-              animate={{ width: 240, opacity: 1 }}
+              animate={{ width: 300, opacity: 1 }}
               exit={{ width: 0, opacity: 0 }}
               transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-              className="flex-shrink-0 h-full overflow-hidden"
+              className="flex-shrink-0 h-full overflow-hidden bg-[#191C32]"
             >
-              <div style={{ width: 240, height: '100%' }}>
+              <div style={{ width: 300, height: '100%' }}>
                 <RightSidebarPanel
                   selectedConversation={selectedConversation}
                   getConversationName={getConversationName}
